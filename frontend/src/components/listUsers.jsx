@@ -46,7 +46,7 @@ function ListUsers() {
                                 return (
                                     <tr key={user._id}>
                                         <td>   <img
-                                            src={`http://localhost:6000/${user.image}`}
+                                            src={`http://localhost:8000/${user.image}`}
                                             alt={user.name}
                                             className="rounded-circle"
                                             width="50"
