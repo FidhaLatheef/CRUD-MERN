@@ -1,12 +1,35 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css"
+import axios from "axios"
+import { getUser } from '../redux/userSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 
-function listUsers() {
+function ListUsers() {
+    const users = useSelector(state => state.users.users)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("http://localhost:8000/users/userList")
+                console.log(response);
+                dispatch(getUser(response.data));
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        fetchData()
+    }, [dispatch])
+
+    const handleAdd = async () => {
+        window.location.href = '/create-user'
+    }
+
     return (
         <div style={{ backgroundColor: "#e6e6e6" }} className='d-flex vh-100 justify-content-center align-items-center'>
             <div className='w-70 bg-white rounded p-3'>
-                <button className='btn btn-success'>Add +</button>
+                <button onClick={handleAdd} className='btn btn-success'>Add +</button>
                 <table className='table'>
                     <thead>
                         <tr>
@@ -18,18 +41,32 @@ function listUsers() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><img src='' alt="" width='40px' height='4' /></td>
-                            <td>John Doe</td>
-                            <td>+91786268765</td>
-                            <td>Mumbai, India</td>
-                            <td>
-                                <div className="d-flex gap-2">
-                                    <button className='btn btn-warning'>Update</button>
-                                    <button className='btn btn-danger'>Delete</button>
-                                </div>
-                            </td>
-                        </tr>
+                        {
+                            users.map(user => {
+                                return (
+                                    <tr key={user._id}>
+                                        <td>   <img
+                                            src={`http://localhost:6000/${user.image}`}
+                                            alt={user.name}
+                                            className="rounded-circle"
+                                            width="50"
+                                            height="50"
+                                        /></td>
+                                        <td>{user.name}</td>
+                                        <td>{user.mobile}</td>
+                                        <td>{user.address}</td>
+                                        <td>
+                                            <div className="d-flex gap-2">
+                                                <button className='btn btn-warning'>Update</button>
+                                                <button className='btn btn-danger'>Delete</button>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                )
+                            })
+                        }
+
                     </tbody>
                 </table>
             </div>
@@ -37,4 +74,4 @@ function listUsers() {
     )
 }
 
-export default listUsers
+export default ListUsers
