@@ -84,9 +84,10 @@ function CreateUser() {
         });
     }
   return (
+    <>
+     <Toaster />
     <div style={{ backgroundColor: "#e6e6e6" }} className='d-flex vh-100 justify-content-center align-items-center'> 
-      <Toaster />
-      <div  className='w-70 bg-white rounded p-3'>
+      <div  className='w-50 bg-white rounded p-3'>
       <form onSubmit={handleSubmit}>
             <h2 className="text-center">Create User</h2>
             <div className='mb-2'>
@@ -138,12 +139,15 @@ function CreateUser() {
                 onChange={(e) => setImage(e.target.files[0])}
                 className="form-control" />
             </div>
-            <button type='submit' className='btn btn-success'>Create</button>
+            <div className='mb-2 mt-2 text-center'> 
+          <button type='submit' className='btn btn-primary'>Create</button>
+        </div>
 
           </form>
 
       </div>
-    </div>
+    </div> 
+    </>
   )
 }
 
