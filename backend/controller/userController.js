@@ -73,3 +73,14 @@ exports.updateUser=asyncHandler(async(req,res)=>{
     }
     
   })
+  exports.deleteUser=asyncHandler(async(req,res)=>{
+    const { id } = req.params;
+    try {
+        await userModel.findByIdAndDelete(id);
+        res.send("deleted successfully");
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "unable to deleted", error: error });
+    }
+
+  })

@@ -42,10 +42,16 @@ function UpdateUser() {
   
     const handleUpdate = (e) => {
       e.preventDefault();
-  console.log('hiiiiiiiiii')
+
       if (name === '' || address === '' || mobile === '' || password === '' || !image === '') {
         setFieldRequired(true);
         toast.error('Please enter all fields')
+        return;
+      }
+
+      const passwordError = isPasswordValid(password);
+      if (passwordError) {
+        toast.error(passwordError);
         return;
       }
   
@@ -54,12 +60,7 @@ function UpdateUser() {
         return;
       }
   
-      const passwordError = isPasswordValid(password);
-      if (passwordError) {
-        toast.error(passwordError);
-        return;
-      }
-  
+     
       const formData = new FormData();
   
       formData.append("name", name);

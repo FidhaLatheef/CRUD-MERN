@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css"
 import axios from "axios"
-import { getUser } from '../redux/userSlice'
+import { deleteUser, getUser } from '../redux/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -25,6 +25,20 @@ function ListUsers() {
 
     const handleAdd = async () => {
         window.location.href = '/create-user'
+    }
+    const handleDelete = (id) => {
+        const confirmed = window.confirm('Are you sure want to delete?');
+        if (confirmed) {
+            axios.delete("http://localhost:8000/users/deleteUser/" + id)
+                .then(response => {
+                    dispatch(deleteUser({ id }))
+                    console.log(users);
+                }).catch(err => {
+                    console.log(err)
+                })
+
+        }
+
     }
 
     return (
@@ -59,7 +73,8 @@ function ListUsers() {
                                         <td>
                                             <div className="d-flex gap-2">
                                             <Link to={`/update-user/${user._id}`} className='btn btn-warning'>Update</Link>
-                                                <button className='btn btn-danger'>Delete</button>
+                                            <button onClick={() => handleDelete(user._id)} className='btn btn-danger'>Delete</button>
+                                                
                                             </div>
                                         </td>
 
@@ -67,7 +82,6 @@ function ListUsers() {
                                 )
                             })
                         }
-
                     </tbody>
                 </table>
             </div>
