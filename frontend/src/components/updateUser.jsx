@@ -95,7 +95,7 @@ function UpdateUser() {
       <div style={{ backgroundColor: "#e6e6e6" }} className='d-flex vh-100 justify-content-center align-items-center'>
         <div className='w-50 bg-white rounded p-3'>
           <form onSubmit={handleUpdate}>
-            <h2 className="text-center">Update User</h2>
+            <h2 className="text-center text-muted">UPDATE USER</h2>
             <div className='mb-2'>
               <label htmlFor='name'>Name: </label>
               <input
@@ -145,8 +145,9 @@ function UpdateUser() {
                 onChange={(e) => setImage(e.target.files[0])}
                 className="form-control" />
             </div>
-            <button type='submit' className='btn btn-success'>Update</button>
-
+            <div className='mb-2 mt-2 text-center'> 
+          <button type='submit' className='btn btn-success'>Update</button>
+        </div>
           </form>
         </div>
       </div>
